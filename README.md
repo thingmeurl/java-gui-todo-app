@@ -38,6 +38,12 @@ todo-gui-app/
 
 ---
 
+## 📊 UMLクラス図
+
+![Class Diagram](docs/class-diagram.png)
+
+---
+
 ## 🛠️ 開発環境
 
 - Java 17+
