@@ -1,0 +1,73 @@
+@startuml
+
+package model {
+  class Task {
+    - int id
+    - String title
+    - boolean done
+    - Priority priority
+    - LocalDate dueDate
+    + String toCSV()
+    + static Optional<Task> fromCSV(String)
+  }
+
+  enum Priority {
+    LOW
+    MEDIUM
+    HIGH
+  }
+
+  class TaskManager {
+    - List<Task> tasks
+    - int nextId
+    + Task createNewTask(String, boolean, Priority, LocalDate)
+    + List<Task> getTasks()
+    + void addTask(Task)
+    + void deleteTask(Task)
+    + void saveTasksToFile()
+    + void loadTasksFromFile()
+  }
+
+  class TaskTableModel {
+    - List<Task> tasks
+    + int getRowCount()
+    + int getColumnCount()
+    + Object getValueAt(int, int)
+    + void updateTasks(List<Task>)
+  }
+}
+
+package view {
+  class TodoAppGUI {
+    - TaskManager taskManager
+    - JTable taskTable
+    - TaskTableModel tableModel
+    - TodoAppController controller
+  }
+
+  class TaskEditorDialog {
+    - JTextField titleField
+    - JCheckBox doneCheckBox
+    - JComboBox priorityComboBox
+    - DatePicker datePicker
+  }
+}
+
+package controller {
+  class TodoAppController {
+    - TaskManager taskManager
+    + void addTask(Task)
+    + void deleteTask(Task)
+    + TaskManager getTaskManager()
+  }
+}
+
+' 関係
+TodoAppGUI --> TodoAppController
+TodoAppController --> TaskManager
+TodoAppGUI --> TaskTableModel
+TaskTableModel --> Task
+TaskManager --> Task
+TaskEditorDialog --> Task
+
+@enduml
